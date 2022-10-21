@@ -77,6 +77,7 @@ def tour(tempo):
 
     return tempo,joueur
 
+#Fonction de condition de victoire
 def gagné():
     if (ligne1[0] == ligne1[1]) and (ligne1[1] == ligne1[2]) and (ligne1[0] != "_ "):
         return 1
@@ -96,9 +97,10 @@ def gagné():
         return 1
 
 
-
+#menu de lancement
 print("Bonjour voulez vous jouer ou voir les scores")
 menu=0
+#boucle meni
 while menu ==0:
     choix = input("jouer   scores\n")
     if choix == "jouer" or choix == "Jouer":
@@ -109,9 +111,9 @@ while menu ==0:
       print("pas encore fait")
       menu=1
     else:
-        print (bcolors.Fail +choix, "n'est pas une option valable"+bcolors.RESET)
+        print (bcolors.FAIL +choix, "n'est pas une option valable"+bcolors.RESET)
 
-
+#init du tableau
 ligne1=['_ ','_ ','_ ']
 ligne2=['_ ','_ ','_ ']
 ligne3=['_ ','_ ','_ ']
@@ -119,7 +121,8 @@ ligne3=['_ ','_ ','_ ']
 
 affichage()
 
-while '_ ' in ligne1 and '_ ' in ligne2 and '_ ' in ligne3:
+#lance la partie
+while '_ ' in ligne1  or  '_ ' in ligne2  or  '_ ' in ligne3:
     tempo,joueur =tour(tempo)
     victoire=gagné()
     if victoire==1:
@@ -128,3 +131,4 @@ while '_ ' in ligne1 and '_ ' in ligne2 and '_ ' in ligne3:
         break
     affichage()
 
+print(bcolors.WARNING +"EGALITE"+bcolors.RESET)
