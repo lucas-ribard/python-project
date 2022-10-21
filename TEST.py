@@ -1,46 +1,74 @@
-import random
+ligne1=['_ ','_ ','_ ']
+ligne2=['_ ','_ ','_ ']
+ligne3=['_ ','_ ','_ ']
 
-#
-with open('ressources/dico_france.txt', 'rt', encoding='latin1') as dico:
-    rd_nb = random.randint(0, 22740)
+def affichage():
+    # affiche le terrain
+    print("   [1][2][3]")
+    print("[1]", ligne1[0], ligne1[1], ligne1[2])
+    print("[2]", ligne2[0], ligne2[1], ligne2[2])
+    print("[3]", ligne3[0], ligne3[1], ligne3[2])
 
-    # recup le mot a la ligne selectionné
-    all_lines = dico.readlines()
-dico.close()
-#recup le mots en fonction de la position dans le txt
-mot_choisis=all_lines[rd_nb]
-print(mot_choisis)
+player1="jackie"
+player2="michel"
+tempo=0
+affichage()
+# déroulement d'un tour
+def tour(tempo):
+    if tempo == 0 :
+        joueur = player1
+    elif tempo == 1:
+        joueur = player2
 
+    print("tour de ",joueur)
+    if joueur == player1:
+        token = "X "
+    elif joueur == player2:
+        token = "O "
+    colone = int(input("colone : ")) - 1
+    ligne = int(input("ligne : "))
 
-mot_choisis = mot_choisis.rstrip()
+    if ligne == 1:
+        ligne1[colone] = token
+        print("test")
+    elif ligne == 2:
+        ligne2[colone] = token
+        print("test")
+    elif ligne == 3:
+        ligne3[colone] = token
+    else:
+        print("pas la bonne ligne ducon")
 
-##############################################
+    if tempo == 0:
+        tempo=1
+    else :
+        tempo=0
+    return tempo,joueur
 
-mot_devine = "-" * len(mot_choisis)
-print(mot_devine)
-lettres_deja_proposees=[]
-vie=10
-while mot_devine != mot_choisis and vie !=0:
-    print("il vous reste : ",vie," vies")
-    print("Vous avez proposée : ",lettres_deja_proposees)
-    lettre = input("\nEntrez une lettre : ")
+def gagné():
+    if (ligne1[0] == ligne1[1]) and (ligne1[1] == ligne1[2]) and (ligne1[0] != "_ "):
+        return 1
+    if (ligne2[0] == ligne2[1]) and (ligne2[1] == ligne2[2]) and (ligne2[0] != "_ "):
+        return 1
+    if (ligne3[0] == ligne3[1]) and (ligne3[1] == ligne3[2]) and (ligne3[0] != "_ "):
+        return 1
+    if (ligne1[0] == ligne2[1]) and (ligne2[1] == ligne3[2]) and (ligne1[0] != "_ "):
+        return 1
+    if (ligne3[0] == ligne2[1]) and (ligne2[1] == ligne1[2]) and (ligne1[2] != "_ "):
+        return 1
+    if (ligne1[0] == ligne2[0]) and (ligne2[0] == ligne3[0]) and (ligne3[0] != "_ "):
+        return 1
+    if (ligne1[1] == ligne2[1]) and (ligne2[1] == ligne3[1]) and (ligne1[1] != "_ "):
+        return 1
+    if (ligne1[2] == ligne2[2]) and (ligne2[2] == ligne3[2]) and (ligne1[2] != "_ "):
+        return 1
 
-    if lettre not in mot_choisis and lettre not in lettres_deja_proposees:
-        vie -= 1
+while '_ ' in ligne1 and '_ ' in ligne2 and '_ ' in ligne3:
+    tempo,joueur =tour(tempo)
+    victoire=gagné()
+    if victoire==1:
+        affichage()
+        print("le joueur",joueur,"a gagné" )
+        break
+    affichage()
 
-    if lettre not in lettres_deja_proposees:
-        lettres_deja_proposees += [lettre]
-
-    elif lettre in lettres_deja_proposees:
-        print("\nla lettre \"",lettre,"\" à déja été proposé !\nAucune vie ne vous à été déduit\n")
-
-
-    for i in range(len(mot_choisis)):
-        if lettre == mot_choisis[i]:
-            mot_devine = mot_devine[:i] + lettre + mot_devine[i + 1:]
-    print(mot_devine)
-
-if vie ==0:
-    print("\nGame Over !\n")
-if mot_choisis == mot_devine:
-    print('\nBravo ! Le mot', mot_choisis, 'a été trouvé\n')
