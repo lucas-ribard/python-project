@@ -1,3 +1,5 @@
+from score import checkScore
+
 tempo=0
 
 # des couleurs pour faire jolie
@@ -17,7 +19,7 @@ def affichage():
     print("[2]", ligne2[0], ligne2[1], ligne2[2])
     print("[3]", ligne3[0], ligne3[1], ligne3[2])
     print("\n^")
-    print("\nligne")
+    print("ligne")
 # Fonction qui dit qui joue
 def tempocontrol(tempo):
     if tempo == 0:
@@ -108,8 +110,9 @@ while menu ==0:
         joueur2=input("Username 2 Rond  :")
         menu=1
     elif choix == "scores" or choix == "Scores" or choix == "score" or choix == "Score":
-      print("pas encore fait")
-      menu=1
+        checkScore()
+        menu=1
+        exit()
     else:
         print (bcolors.FAIL +choix, "n'est pas une option valable"+bcolors.RESET)
 
