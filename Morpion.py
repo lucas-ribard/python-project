@@ -134,4 +134,5 @@ while '_ ' in ligne1  or  '_ ' in ligne2  or  '_ ' in ligne3:
         break
     affichage()
 
-print(bcolors.WARNING +"EGALITE"+bcolors.RESET)
+if victoire !=1:
+    print(bcolors.WARNING +"EGALITE"+bcolors.RESET)
